@@ -10,11 +10,30 @@ from datetime import datetime
 class BaseModel:
     """Base class for all our classes"""
 
-    def __init__(self):
-        """constructor"""
-        self.id = str(uuid4())
-        self.created_at = datetime.utcnow()
-        self.updated_at = datetime.utcnow()
+    def __init__(self, *args, **kwargs):
+        """constructor it either deserialize
+        a serialized class or intialize a new"""
+
+        # initialize if nothing is passed
+        if kwargs == {}:
+            self.id = str(uuid4())
+            self.created_at = datetime.utcnow()
+            self.updated_at = datetime.utcnow()
+            return
+
+        # using key words (deserialize)
+        for key, val in kwargs.items():
+            if key == '__class__':
+                continue
+            self.__dict__[key] = val
+        if 'created_at' in kwargs:
+            self.created_at = datetime.strptime(
+                    kwargs['created_at'],
+                    '%Y-%m-%dT%H:%M:%S.%f')
+        if 'updated_at' in kwargs:
+            self.updated_at = datetime.strptime(
+                    kwargs['updated_at'],
+                    '%Y-%m-%dT%H:%M:%S.%f')
 
     def __str__(self):
         """overide str representation of self"""
