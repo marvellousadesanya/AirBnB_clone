@@ -1,10 +1,11 @@
-#!/bin/usr/python3
+#!/usr/bin/python3
 """
 This File defines the BaseModel class that will
 serve as the base class for all our models."""
 
 from uuid import uuid4
 from datetime import datetime
+import models
 
 
 class BaseModel:
@@ -19,6 +20,7 @@ class BaseModel:
             self.id = str(uuid4())
             self.created_at = datetime.utcnow()
             self.updated_at = datetime.utcnow()
+            models.storage.new(self)
             return
 
         # using key words (deserialize)
@@ -46,6 +48,7 @@ class BaseModel:
     def save(self):
         """updates last updated variable"""
         self.updated_at = datetime.utcnow()
+        models.storage.save()
 
     def to_dict(self):
         """Returns a dictionary representation of self"""
