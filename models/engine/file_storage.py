@@ -70,3 +70,30 @@ class FileStorage:
             raise InstanceNotFoundError(obj_id, model)
 
         return F.__objects[key]
+
+    def delete_by_id(self, model, obj_id):
+        """Find and return an elemt of model by its id"""
+        F = FileStorage
+        if model not in F.models:
+            # Invalid Model Name
+            # Not yet Implemented
+            raise ModelNotFoundError(model)
+
+        key = model + "." + obj_id
+        if key not in F.__objects:
+            # invalid id
+            # Not yet Implemented
+            raise InstanceNotFoundError(obj_id, model)
+
+        del F.__objects[key]
+        self.save()
+
+    def find_all(self, model=""):
+        """Find all instances or instances of model"""
+        if model and model not in FileStorage.models:
+            raise ModelNotFoundError(model)
+        results = []
+        for key, val in FileStorage.__objects.items():
+            if key.startswith(model):
+                results.append(str(val))
+        return results
