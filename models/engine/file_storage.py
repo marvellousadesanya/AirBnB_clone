@@ -8,6 +8,7 @@ an object"""
 import json
 from models.base_model import BaseModel
 from .errors import *
+from datetime import datetime
 
 
 class FileStorage:
@@ -75,14 +76,10 @@ class FileStorage:
         """Find and return an elemt of model by its id"""
         F = FileStorage
         if model not in F.models:
-            # Invalid Model Name
-            # Not yet Implemented
             raise ModelNotFoundError(model)
 
         key = model + "." + obj_id
         if key not in F.__objects:
-            # invalid id
-            # Not yet Implemented
             raise InstanceNotFoundError(obj_id, model)
 
         del F.__objects[key]
@@ -97,3 +94,29 @@ class FileStorage:
             if key.startswith(model):
                 results.append(str(val))
         return results
+
+    def update_one(self, model, iid, field, val):
+        """Updates an instance"""
+        F = FileStorage
+        if model not in F.models:
+            raise ModelNotFoundError(model)
+
+        key = model + "." + iid
+        if key not in F.__objects:
+            raise InstanceNotFoundError(iid, model)
+        if field in ("id", "updated_at", "created_at"):
+            # not allowed to be updated
+            return
+        inst = F.__objects[key]
+        try:
+            # if instance has that value
+            # cast it to its type
+            vtype = type(inst.__dict__[field])
+            inst.__dict__[field] = vtype(val)
+        except KeyError:
+            # instance doesn't has the field
+            # assume type of string
+            inst.__dict__[field] = str(val)
+        finally:
+            inst.updated_at = datetime.utcnow()
+            self.save()

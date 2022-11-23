@@ -109,6 +109,27 @@ class HBNBCommand(Cmd):
             print("** Too many argument for all **")
             pass
 
+    def do_update(self, arg):
+        """Updates an instance base on its id eg
+        $ update Model id field value
+        Throws errors for missing arguments"""
+        args, n = parse(arg)
+        if not n:
+            print("** class name missing **")
+        elif n == 1:
+            print("** instance id missing **")
+        elif n == 2:
+            print("** attribute name missing **")
+        elif n == 3:
+            print("** value missing **")
+        else:
+            try:
+                storage.update_one(*args[0:4])
+            except ModelNotFoundError:
+                print("** class doesn't exist **")
+            except InstanceNotFoundError:
+                print("** no instance found **")
+
 
 def parse(line: str):
     """splits a line by spaces"""
