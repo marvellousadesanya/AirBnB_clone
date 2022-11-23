@@ -9,6 +9,11 @@ from models.engine.errors import *
 import shlex
 from models.base_model import BaseModel
 from models.user import User
+from models.state import State
+from models.city import City
+from models.amenity import Amenity
+from models.place import Place
+from models.review import Review
 
 
 # Global variable of registered models
@@ -132,6 +137,10 @@ class HBNBCommand(Cmd):
                 print("** class doesn't exist **")
             except InstanceNotFoundError:
                 print("** no instance found **")
+
+    def do_models(self, arg):
+        """Print all registered Models"""
+        print(*classes)
 
 
 def parse(line: str):
