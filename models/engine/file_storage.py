@@ -6,8 +6,9 @@ It uses json format to serialize or deserialize
 an object"""
 
 import json
-from models.base_model import BaseModel
 from .errors import *
+from models.base_model import BaseModel
+from models.user import User
 from datetime import datetime
 
 
@@ -17,9 +18,10 @@ class FileStorage:
     # class private variables
     __objects: dict = {}
     __file_path: str = "file.json"
-    models = {
-            "BaseModel":BaseModel
-    }
+    models = (
+        "BaseModel",
+        "User"
+    )
 
     def __init__(self, fname=None):
         """constructor"""
@@ -50,7 +52,7 @@ class FileStorage:
                 deserialized = json.loads(f.read())
             FileStorage.__objects = {
                     obj["__class__"] + "." + obj["id"]:
-                    FileStorage.models[obj["__class__"]](**obj)
+                    eval(obj["__class__"])(**obj)
                     for obj in deserialized}
         except FileNotFoundError:
             # No need for error

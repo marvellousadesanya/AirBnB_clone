@@ -7,10 +7,12 @@ from cmd import Cmd
 from models import storage
 from models.engine.errors import *
 import shlex
+from models.base_model import BaseModel
+from models.user import User
 
 
 # Global variable of registered models
-classes = type(storage).models
+classes = storage.models
 
 
 class HBNBCommand(Cmd):
@@ -41,7 +43,8 @@ class HBNBCommand(Cmd):
         elif args[0] not in classes:
             print("** class doesn't exist **")
         elif n == 1:
-            temp = classes[args[0]]()
+            # temp = classes[args[0]]()
+            temp = eval(args[0])()
             print(temp.id)
             temp.save()
         else:
