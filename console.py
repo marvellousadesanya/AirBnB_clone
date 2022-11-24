@@ -142,6 +142,37 @@ class HBNBCommand(Cmd):
         """Print all registered Models"""
         print(*classes)
 
+    def handle_class_methods(self, arg):
+        """Handle Class Methods
+        <cls>.all(), <cls>.show() etc
+        """
+
+        printable = ("all(", "show(", "count(")
+        try:
+            val = eval(arg)
+            for x in printable:
+                if x in arg:
+                    print(val)
+                    break
+            return
+        except AttributeError:
+            print("** invalid method **")
+        except InstanceNotFoundError:
+            print("** no instance found **")
+        except TypeError as te:
+            field = te.args[0].split()[-1].replace("_", " ")
+            field = field.strip("'")
+            print(f"** {field} missing **")
+        except Exception as e:
+            print("** invalid syntax **")
+            pass
+
+    def default(self, arg):
+        """Override default method to handle class methods"""
+        if '.' in arg and arg.split('.')[0] in classes and arg[-1] == ')':
+            return self.handle_class_methods(arg)
+        return Cmd.default(self, arg)
+
 
 def parse(line: str):
     """splits a line by spaces"""

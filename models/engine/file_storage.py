@@ -105,7 +105,7 @@ class FileStorage:
                 results.append(str(val))
         return results
 
-    def update_one(self, model, iid, field, val):
+    def update_one(self, model, iid, field, value):
         """Updates an instance"""
         F = FileStorage
         if model not in F.models:
@@ -122,11 +122,11 @@ class FileStorage:
             # if instance has that value
             # cast it to its type
             vtype = type(inst.__dict__[field])
-            inst.__dict__[field] = vtype(val)
+            inst.__dict__[field] = vtype(value)
         except KeyError:
             # instance doesn't has the field
-            # assume type of string
-            inst.__dict__[field] = str(val)
+            # assign the value with its type
+            inst.__dict__[field] = value
         finally:
             inst.updated_at = datetime.utcnow()
             self.save()

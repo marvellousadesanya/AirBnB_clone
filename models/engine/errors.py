@@ -12,7 +12,7 @@ class ModelNotFoundError(Exception):
 
 class InstanceNotFoundError(Exception):
     """Raised when an unknown id  is passed"""
-    
+
     def __init__(self, obj_id="", mod="BaseModel"):
         super().__init__(
                 f"Insatnce of {mod} with id {obj_id} does not exist!")

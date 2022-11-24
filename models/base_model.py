@@ -57,3 +57,50 @@ class BaseModel:
         temp['created_at'] = self.created_at.strftime('%Y-%m-%dT%H:%M:%S.%f')
         temp['updated_at'] = self.updated_at.strftime('%Y-%m-%dT%H:%M:%S.%f')
         return temp
+
+    @classmethod
+    def all(cls):
+        """Retrieve all current instances of cls"""
+        return models.storage.find_all(cls.__name__)
+
+    @classmethod
+    def count(cls):
+        """Get the number of all current instances of cls"""
+        return len(models.storage.find_all(cls.__name__))
+
+    @classmethod
+    def show(cls, instance_id):
+        """Retrieve an instance"""
+        return models.storage.find_by_id(
+            cls.__name__,
+            instance_id
+        )
+
+    @classmethod
+    def destroy(cls, instance_id):
+        """Deletes an instance"""
+        return models.storage.delete_by_id(
+            cls.__name__,
+            instance_id
+        )
+
+    @classmethod
+    def update(cls, instance_id, *args):
+        """Updates an instance
+        if args has one elem and its a dict:
+        it updates by key value
+        else:
+        updates by first being key and second being value"""
+        if not len(args):
+            print("** attribute name missing **")
+            return
+        if len(args) == 1 and isinstance(args[0], dict):
+            args = args[0].items()
+        else:
+            args = [args[:2]]
+        for arg in args:
+            models.storage.update_one(
+                cls.__name__,
+                instance_id,
+                *arg
+            )
