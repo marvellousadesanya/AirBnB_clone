@@ -6,6 +6,7 @@ It uses json format to serialize or deserialize
 an object"""
 
 import json
+from json.decoder import JSONDecodeError
 from .errors import *
 from models.base_model import BaseModel
 from models.user import User
@@ -44,23 +45,24 @@ class FileStorage:
 
     def save(self):
         """serializes objects stored and persist in file"""
-        serialized = list(map(
-            lambda obj: obj.to_dict(),
-            FileStorage.__objects.values()))
+        serialized = {
+            key:val.to_dict()
+            for key, val in self.__objects.items()
+        }
         with open(FileStorage.__file_path, "w") as f:
             f.write(json.dumps(serialized))
 
     def reload(self):
         """de-serialize persisted objects"""
         try:
-            deserialized = []
+            deserialized = {}
             with open(FileStorage.__file_path, "r") as f:
                 deserialized = json.loads(f.read())
             FileStorage.__objects = {
-                    obj["__class__"] + "." + obj["id"]:
+                key:
                     eval(obj["__class__"])(**obj)
-                    for obj in deserialized}
-        except FileNotFoundError:
+                    for key, obj in deserialized.items()}
+        except (FileNotFoundError, JSONDecodeError):
             # No need for error
             pass
 
