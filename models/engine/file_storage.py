@@ -30,7 +30,7 @@ class FileStorage:
         "Amenity", "Review"
     )
 
-    def __init__(self, fname=None):
+    def __init__(self):
         """constructor"""
         pass
 

@@ -69,6 +69,12 @@ class BaseModel:
         return len(models.storage.find_all(cls.__name__))
 
     @classmethod
+    def create(cls, *args, **kwargs):
+        """Creates an Instance"""
+        new = cls(*args, **kwargs)
+        return new.id
+
+    @classmethod
     def show(cls, instance_id):
         """Retrieve an instance"""
         return models.storage.find_by_id(

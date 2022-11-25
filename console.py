@@ -147,7 +147,7 @@ class HBNBCommand(Cmd):
         <cls>.all(), <cls>.show() etc
         """
 
-        printable = ("all(", "show(", "count(")
+        printable = ("all(", "show(", "count(", "create(")
         try:
             val = eval(arg)
             for x in printable:
