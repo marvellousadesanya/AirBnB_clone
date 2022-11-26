@@ -11,7 +11,7 @@ class User(BaseModel):
     """The User Model"""
 
     # Attributes
-    email : str = ""
-    password : str = ""
-    first_name : str = ""
-    last_name : str = ""
+    email: str = ""
+    password: str = ""
+    first_name: str = ""
+    last_name: str = ""

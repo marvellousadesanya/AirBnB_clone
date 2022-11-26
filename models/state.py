@@ -11,4 +11,4 @@ class State(BaseModel):
     """The State Model"""
 
     # Attributes
-    name : str = ""
+    name: str = ""

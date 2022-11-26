@@ -46,7 +46,7 @@ class FileStorage:
     def save(self):
         """serializes objects stored and persist in file"""
         serialized = {
-            key:val.to_dict()
+            key: val.to_dict()
             for key, val in self.__objects.items()
         }
         with open(FileStorage.__file_path, "w") as f:
