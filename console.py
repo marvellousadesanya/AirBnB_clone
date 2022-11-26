@@ -80,10 +80,7 @@ class HBNBCommand(Cmd):
             pass
 
     def do_destroy(self, arg):
-        """Deletes an Instance of Model base on its ModelName and id eg.
-        $ destroy MyModel instance_id
-        Print error message if either MyModel or instance_id is missing
-        Print an Error message for wrong MyModel or instance_id"""
+        """Deletes an Instance of Model base on its ModelName and id."""
         args, n = parse(arg)
 
         if not n:
@@ -102,10 +99,9 @@ class HBNBCommand(Cmd):
             pass
 
     def do_all(self, args):
-        """Retrieve all instances: eg.
-        $ all
-        $ all MyModel
-        if MyModel is passed returns only instances of MyModel"""
+        """Usage: all or all <class> or <class>.all()
+        Display string representations of all instances of a given class.
+        If no class is specified, displays all instantiated objects."""
         args, n = parse(args)
 
         if n < 2:
@@ -169,7 +165,10 @@ class HBNBCommand(Cmd):
 
     def default(self, arg):
         """Override default method to handle class methods"""
-        if '.' in arg and arg.split('.')[0] in classes and arg[-1] == ')':
+        if '.' in arg and arg[-1] == ')':
+            if arg.split('.')[0] not in classes:
+                print("** class doesn't exist **")
+                return
             return self.handle_class_methods(arg)
         return Cmd.default(self, arg)
 
