@@ -1,6 +1,6 @@
 #!/usr/bin/python3
-
-"""This file defines the console class which will
+"""
+This file defines the console class which will
 serve as the entry point of the entire project
 """
 from cmd import Cmd
@@ -30,8 +30,7 @@ class HBNBCommand(Cmd):
 
     """Commands"""
     def do_EOF(self, args):
-        """Exit the programm"""
-        print()
+        """Exit the programme in non-interactive mode"""
         return True
 
     def do_quit(self, args):
