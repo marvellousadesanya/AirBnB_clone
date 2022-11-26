@@ -173,6 +173,10 @@ class HBNBCommand(Cmd):
             return self.handle_class_methods(arg)
         return Cmd.default(self, arg)
 
+    def emptyline(self):
+        """Override empty line to do nothing"""
+        return
+
 
 def parse(line: str):
     """splits a line by spaces"""
