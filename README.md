@@ -43,3 +43,5 @@ Type help to see the list of commands and how to use them.
 ## Models
 * [User](models/user.py)
 * [Place](models/place.py)
+
+Thank you!
