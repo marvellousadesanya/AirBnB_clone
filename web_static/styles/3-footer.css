@@ -4,6 +4,8 @@ footer {
 	width: 100%;
 	background-color: white;
 	height: 60px;
-	text-align: center;
+	display: flex;
+	align-items: center;
+	justify-items: center;
 	border-top: 1px #cccccc;
 }

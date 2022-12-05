@@ -1,0 +1,9 @@
+header {
+	width: 100%;
+	height: 60px;
+	background-color: white;
+	border-bottom: 1px #cccccc;
+	background-image: url('/web_static/images/logo.png');
+	background-repeat: no-repeat;
+	background-position: 24px center;
+}
