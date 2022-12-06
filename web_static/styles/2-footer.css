@@ -1,9 +1,12 @@
 footer {
-	position: absolute;
-	bottom: 0;
-	width: 100%;
-	background-color: white;
-	height: 60px;
-	text-align: center;
-	border-top: 1px #cccccc;
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  bottom: 0;
+  width: 100%;
+  background-color: green;
+  height: 60px;
+  text-align: center;
+  border-top: 1px #cccccc;
 }
